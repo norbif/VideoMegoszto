@@ -1,0 +1,42 @@
+.toolbar-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    background-color: var(--mat-sys-primary);
+    
+}
+
+.app-toolbar {
+    width: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    color: white;
+    height: 64px;
+    border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border: 0px solid #000000;
+}
+
+
+
+.app-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: black;
+}
+
+.app-sidenav {
+    width: 150px;
+}

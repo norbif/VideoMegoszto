@@ -1,0 +1,13 @@
+[
+    {
+        "_id": 1,
+        "felhasznalonev": "angular_pro",
+        "email": "angular@example.com",
+        "jelszoHash": "hashpeldaszoveg123",
+        "profilkepUrl": "profile1.jpg",
+        "regisztracioDatuma": "2024-01-15",
+        "feltoltottVideok": [],
+        "kedveltVideok": [],
+        "lejatszasiListak": []
+    }
+]

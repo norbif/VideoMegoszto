@@ -1,0 +1,66 @@
+[
+    {
+      "_id": 1,
+      "szerzoId": 1,
+      "szoveg": "Nagyon hasznos videó, sokat tanultam belőle!",
+      "datum": "2024-04-01T10:30:00",
+      "kedvelesekSzama": 15,
+      "nemKedvelesekSzama": 0
+    },
+    {
+      "_id": 2,
+      "szerzoId": 1,
+      "szoveg": "Érdekes megközelítés, de lehetne részletesebb.",
+      "datum": "2024-04-02T14:20:00",
+      "kedvelesekSzama": 8,
+      "nemKedvelesekSzama": 1
+    },
+    {
+      "_id": 3,
+      "szerzoId": 1,
+      "szoveg": "Kérlek készíts folytatást ebből a témából!",
+      "datum": "2024-04-03T09:15:00",
+      "kedvelesekSzama": 25,
+      "nemKedvelesekSzama": 2
+    },
+    {
+      "_id": 4,
+      "szerzoId": 1,
+      "szoveg": "Ez pontosan az volt, amit kerestem!",
+      "datum": "2024-04-04T16:45:00",
+      "kedvelesekSzama": 12,
+      "nemKedvelesekSzama": 0
+    },
+    {
+      "_id": 5,
+      "szerzoId": 1,
+      "szoveg": "A 3:24-nél lévő rész különösen hasznos.",
+      "datum": "2024-04-05T11:30:00",
+      "kedvelesekSzama": 18,
+      "nemKedvelesekSzama": 1
+    },
+    {
+      "_id": 6,
+      "szerzoId": 1,
+      "szoveg": "Köszönöm a részletes magyarázatot!",
+      "datum": "2024-04-06T13:20:00",
+      "kedvelesekSzama": 9,
+      "nemKedvelesekSzama": 0
+    },
+    {
+      "_id": 7,
+      "szerzoId": 1,
+      "szoveg": "Jó lenne, ha több ilyen oktató videó készülne.",
+      "datum": "2024-04-07T15:10:00",
+      "kedvelesekSzama": 30,
+      "nemKedvelesekSzama": 3
+    },
+    {
+      "_id": 8,
+      "szerzoId": 1,
+      "szoveg": "Remek tartalom, már várom a következőt!",
+      "datum": "2024-04-08T17:25:00",
+      "kedvelesekSzama": 22,
+      "nemKedvelesekSzama": 1
+    }
+  ]

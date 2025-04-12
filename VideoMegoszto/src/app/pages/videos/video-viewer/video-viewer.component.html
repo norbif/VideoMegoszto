@@ -1,0 +1,18 @@
+<div class="video-container" *ngIf="video">
+    <div class="video-player">
+        <video controls [src]="video.url" poster="{{video.thumbnailUrl}}">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div class="video-info">
+        <h1>{{video.cim}}</h1>
+        <div class="video-stats">
+            <span>{{video.megtekintesekSzama}} megtekintés</span>
+            <div class="video-likes">
+                <span>{{video.kedvelesekSzama}} tetszés</span>
+                <span>{{video.nemKedvelesekSzama}} nem tetszés</span>
+            </div>
+        </div>
+        <p class="video-description">{{video.leiras}}</p>
+    </div>
+</div>

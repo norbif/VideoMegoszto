@@ -1,0 +1,20 @@
+<mat-sidenav-container>
+    <mat-sidenav #menuItems mode="over" class="app-sidenav">
+        <app-menu [menuItems]="menuItems"></app-menu>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar>
+            <div class="toolbar-container">
+              <button mat-mini-fab class="menu-button" (click)="menuItems.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+                <div class="app-toolbar">
+                    <span class="app-title">
+                        <a routerLink="/home">Videó Megosztó</a>
+                    </span>
+                </div>
+            </div>
+        </mat-toolbar>
+        <router-outlet/>
+    </mat-sidenav-content>
+</mat-sidenav-container>

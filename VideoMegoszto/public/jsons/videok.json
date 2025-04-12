@@ -1,0 +1,80 @@
+[
+    {
+      "_id": 1,
+      "cim": "Angular Alapok",
+      "leiras": "Bevezetés az Angular keretrendszerbe",
+      "url": "video1.mp4",
+      "thumbnailUrl": "video1.png",
+      "feltoltoId": {
+        "_id": 1,
+        "felhasznalonev": "angular_pro",
+        "email": "angular@example.com",
+        "jelszoHash": "hashpeldaszoveg123",
+        "profilkepUrl": "assets/images/profile1.jpg",
+        "regisztracioDatuma": "2024-01-15",
+        "feltoltottVideok": [],
+        "kedveltVideok": [],
+        "lejatszasiListak": []
+      },
+      "feltoltesDatuma": "2024-03-20",
+      "hosszMasodpercben": 1800,
+      "megtekintesekSzama": 1250,
+      "cimkek": ["angular", "typescript", "webfejlesztés"],
+      "lathatosag": "public",
+      "kedvelesekSzama": 156,
+      "nemKedvelesekSzama": 4,
+      "hozzaszolasok": []
+    },
+    {
+      "_id": 2,
+      "cim": "TypeScript Haladóknak",
+      "leiras": "TypeScript fejlett témák és tippek",
+      "url": "video2.mp4",
+      "thumbnailUrl": "video2.png",
+      "feltoltoId": {
+        "_id": 2,
+        "felhasznalonev": "typescript_guru",
+        "email": "typescript@example.com",
+        "jelszoHash": "hashpeldaszoveg456",
+        "profilkepUrl": "assets/images/profile2.jpg",
+        "regisztracioDatuma": "2024-02-01",
+        "feltoltottVideok": [],
+        "kedveltVideok": [],
+        "lejatszasiListak": []
+      },
+        "feltoltesDatuma": "2024-04-01",
+        "hosszMasodpercben": 2400,
+        "megtekintesekSzama": 850,
+        "cimkek": ["typescript", "programozás", "haladó"],
+        "lathatosag": "public",
+        "kedvelesekSzama": 98,
+        "nemKedvelesekSzama": 2,
+        "hozzaszolasok": []
+      },
+      {
+        "_id": 3,
+        "cim": "TypeScript Haladóknak",
+        "leiras": "TypeScript fejlett témák és tippek",
+        "url": "video1.mp4",
+        "thumbnailUrl": "video1.png",
+        "feltoltoId": {
+          "_id": 2,
+          "felhasznalonev": "typescript_guru",
+          "email": "typescript@example.com",
+          "jelszoHash": "hashpeldaszoveg456",
+          "profilkepUrl": "assets/images/profile2.jpg",
+          "regisztracioDatuma": "2024-02-01",
+          "feltoltottVideok": [],
+          "kedveltVideok": [],
+          "lejatszasiListak": []
+        },
+          "feltoltesDatuma": "2024-04-01",
+          "hosszMasodpercben": 2400,
+          "megtekintesekSzama": 850,
+          "cimkek": ["typescript", "programozás", "haladó"],
+          "lathatosag": "public",
+          "kedvelesekSzama": 98,
+          "nemKedvelesekSzama": 2,
+          "hozzaszolasok": []
+        }
+  ]
