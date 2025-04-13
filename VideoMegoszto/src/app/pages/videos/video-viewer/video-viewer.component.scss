@@ -1,9 +1,15 @@
 .video-container {
-    width: 1000px;
-    margin: 0 auto;
+    display: flex;
+    margin: 20px auto;
+    flex-direction: column;
+    max-width: 1000px;
+    width: 95%;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: var(--background-light);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
     border-radius: 8px;
+    border: 2px solid var(--primary-color);
+    color: var(--text-primary);
 }
 
 .video-player {
@@ -21,10 +27,14 @@
 
 .video-info {
     padding: 20px;
+    background-color: var(--background-dark);
+    border-radius: 8px;
+    margin-bottom: 20px;
     
     h1 {
         font-size: 24px;
         margin-bottom: 16px;
+        color: var(--text-primary);
     }
 }
 
@@ -33,7 +43,9 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
-    color: #666;
+    color: var(--text-primary);
+    flex-wrap: wrap;
+    gap: 16px;
 }
 
 .video-likes {
@@ -42,7 +54,7 @@
 }
 
 .video-description {
-    color: #333;
+    color: var(--text-primary);
     line-height: 1.5;
 }
 
@@ -52,6 +64,7 @@
     h2 {
         font-size: 20px;
         margin-bottom: 24px;
+        color: var(--text-primary);
     }
 }
 
@@ -64,7 +77,13 @@
 .comment {
     padding: 16px;
     border-radius: 8px;
-    background-color: #f5f5f5;
+    background-color: var(--background-dark);
+    border: 1px solid var(--primary-color);
+    color: var(--text-primary);
+    
+    &:hover {
+        border-color: var(--accent-color);
+    }
 }
 
 .comment-header {
@@ -83,31 +102,132 @@
 
 .comment-meta {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    flex-direction: column;
+    gap: 4px;
     
     .username {
         font-weight: bold;
-        color: #333;
+        color: var(--text-primary);
     }
     
     .date {
         font-size: 12px;
-        color: #666;
+        color: var(--text-secondary);
     }
 }
 
 .comment-text {
     margin: 8px 0;
     line-height: 1.5;
-    color: #333;
-    padding-left: 52px; // 40px (profile pic) + 12px (gap)
+    color: var(--text-primary);
+    padding-left: 52px; 
 }
 
 .comment-stats {
     display: flex;
     gap: 16px;
-    color: #666;
+    color: var(--text-secondary);
     font-size: 14px;
-    padding-left: 52px; // same as comment-text
+    padding-left: 52px; 
+}
+
+.comment-form {
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    
+    .comment-input {
+        width: 100%;
+    }
+    
+    button {
+        align-self: flex-end;
+        background-color: var(--primary-color);
+        &:hover {
+            background-color: var(--accent-color);
+        }
+    }
+}
+
+textarea.mat-input-element {
+    color: var(--text-primary);
+}
+
+:host ::ng-deep .mat-mdc-form-field-flex {
+    background-color: var(--background-dark);
+}
+
+// Responsive breakpoints
+@media (max-width: 1024px) {
+    .video-container {
+        width: 90%;
+    }
+}
+
+@media (max-width: 768px) {
+    .video-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .video-info {
+        padding: 15px;
+        
+        h1 {
+            font-size: 20px;
+        }
+    }
+
+    .video-stats {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .comment-text,
+    .comment-stats {
+        padding-left: 0;
+    }
+
+    .comment-form {
+        button {
+            width: 100%;
+            align-self: stretch;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .video-container {
+        width: 100%;
+        padding: 10px;
+        margin: 10px auto;
+    }
+
+    .video-info {
+        padding: 10px;
+        
+        h1 {
+            font-size: 18px;
+        }
+    }
+
+    .comment {
+        padding: 12px;
+    }
+
+    .comment-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .comment-meta {
+        width: 100%;
+    }
+
+    .video-likes {
+        gap: 8px;
+        flex-wrap: wrap;
+    }
 }

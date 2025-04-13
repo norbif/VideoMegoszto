@@ -1,13 +1,17 @@
-<div class="home-container">
-  <h1>Ajánlott videók</h1>
-  <div class="home-content">
+<div class="home-container page-container">
+  <h1 class="page-title">Ajánlott videók</h1>
+  <div class="video-grid">
     @for (item of videos; track $index) {
       <div class="video-card" (click)="onVideoClick(item._id)">
-        <img [src]="item.thumbnailUrl" alt="Thumbnail" class="video-thumbnail" />
+        <div class="thumbnail-container">
+          <img [src]="item.thumbnailUrl" alt="Thumbnail" class="video-thumbnail">
+          <span class="duration">{{formatDuration(item.hosszMasodpercben)}}</span>
+        </div>
         <div class="video-info">
           <h2 class="video-title">{{ item.cim }}</h2>
+          <p class="video-stats">{{ item.megtekintesekSzama }} megtekintés</p>
+          <p class="upload-date">{{ item.feltoltesDatuma | date:'yyyy.MM.dd' }}</p>
           <p class="video-description">{{ item.leiras }}</p>
-          <p class="video-views">{{ item.megtekintesekSzama }} megtekintés</p>
         </div>
       </div>
     }

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { Video } from '../../../shared/models/video';
 import { Comment } from '../../../shared/models/comment';
 import { User } from '../../../shared/models/user';
@@ -11,7 +15,13 @@ import { UsersService } from '../../../shared/service/users.service';
 @Component({
   selector: 'app-video-viewer',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
+  ],
   templateUrl: './video-viewer.component.html',
   styleUrl: './video-viewer.component.scss'
 })
@@ -20,6 +30,7 @@ export class VideoViewerComponent implements OnInit {
   video?: Video;
   comments: Comment[] = [];
   commentUsers: Map<number, User> = new Map();
+  newCommentText: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -41,7 +52,6 @@ export class VideoViewerComponent implements OnInit {
   private loadComments() {
     if (this.video) {
       this.comments = this.commentsService.getCommentsByIds(this.video.hozzaszolasok);
-      // Load users for each comment
       this.comments.forEach(comment => {
         const user = this.usersService.getUserById(comment.szerzoId);
         if (user) {
@@ -53,5 +63,27 @@ export class VideoViewerComponent implements OnInit {
 
   getUserForComment(szerzoId: number): User | undefined {
     return this.commentUsers.get(szerzoId);
+  }
+
+  addComment() {
+    if (this.video && this.newCommentText.trim()) {
+      const newComment: Comment = {
+        _id: this.comments.length + 1,
+        szerzoId: 1, 
+        szoveg: this.newCommentText.trim(),
+        datum: new Date(),
+        kedvelesekSzama: 0,
+        nemKedvelesekSzama: 0
+      };
+
+      this.comments.unshift(newComment);
+      
+      
+      const user = this.usersService.getUserById(newComment.szerzoId);
+      if (user) {
+        this.commentUsers.set(newComment.szerzoId, user);
+      }
+      this.newCommentText = '';
+    }
   }
 }

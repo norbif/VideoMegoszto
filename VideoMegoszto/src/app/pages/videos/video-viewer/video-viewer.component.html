@@ -17,6 +17,28 @@
     </div>
     <div class="comments-section">
         <h2>Hozzászólások ({{comments.length}})</h2>
+        
+        
+        <div class="comment-form">
+            <mat-form-field appearance="outline" class="comment-input">
+                <mat-label>Írj hozzászólást</mat-label>
+                <textarea 
+                    matInput 
+                    [(ngModel)]="newCommentText" 
+                    placeholder="Mi a véleményed?"
+                    rows="3">
+                </textarea>
+            </mat-form-field>
+            <button 
+                mat-raised-button 
+                color="primary" 
+                (click)="addComment()" 
+                [disabled]="!newCommentText.trim()">
+                Hozzászólás küldése
+            </button>
+        </div>
+
+        
         <div class="comments-list">
             <div class="comment" *ngFor="let comment of comments">
                 <div class="comment-header">

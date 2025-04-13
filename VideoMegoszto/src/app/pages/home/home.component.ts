@@ -29,6 +29,12 @@ export class HomeComponent implements OnInit {
     return shuffled.slice(0, count);
   }
 
+  formatDuration(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+
   onVideoClick(video_id: number) {
     this.router.navigate(['/videos', video_id]);
   }

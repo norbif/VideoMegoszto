@@ -1,4 +1,94 @@
-/* You can add global styles to this file, and also import other style files */
-
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #1a1a1a; 
+}
+
+:root {
+  --primary-color: #007fff; 
+  --accent-color: #00bfff;  
+  --hover-color: #1e90ff;   
+  --background-dark: #1a1a1a; 
+  --background-light: #2d2d2d; 
+  --text-primary: #ffffff;   
+  --text-secondary: #ffffff; 
+}
+
+
+.mat-mdc-select-value-text,
+.mat-mdc-select-arrow,
+.mat-mdc-form-field-label,
+.mat-mdc-paginator-range-label,
+.mat-mdc-paginator-page-size-label,
+.mat-mdc-button-toggle-label-content,
+.mat-mdc-select-placeholder,
+.mat-mdc-option,
+.mat-mdc-paginator {
+  color: var(--text-primary) !important;
+}
+
+
+.mat-mdc-form-field {
+  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label,
+  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: var(--text-primary);
+  }
+}
+
+
+.mat-mdc-select-panel {
+  background-color: var(--background-dark);
+  
+  .mat-mdc-option {
+    color: var(--text-primary);
+    
+    &:hover:not(.mat-mdc-option-disabled) {
+      background-color: var(--background-light);
+    }
+    
+    &.mat-mdc-option-active {
+      background-color: var(--primary-color);
+    }
+  }
+}
+
+.mat-mdc-raised-button.mat-primary {
+  background-color: var(--primary-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.mat-mdc-button-base:hover {
+  background-color: var(--hover-color) !important;
+}
+
+mat-toolbar {
+  background-color: var(--background-light) !important;
+  color: var(--text-primary) !important;
+}
+
+.page-container {
+  background-color: var(--background-light);
+  border: 2px solid var(--primary-color);
+  color: var(--text-primary);
+}
+
+.video-card {
+  background-color: var(--background-dark);
+  border: 1px solid var(--primary-color);
+  
+  &:hover {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 4px 8px var(--primary-color) !important;
+  }
+}
+
+mat-form-field {
+  .mat-mdc-form-field-flex {
+    background-color: var(--background-dark) !important;
+  }
+}
+
+.mat-mdc-button-touch-target {
+  background-color: var(--primary-color) !important;
+}
