@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -11,6 +11,7 @@ import { User } from '../../../shared/models/user';
 import { VideosService } from '../../../shared/service/videos.service';
 import { CommentsService } from '../../../shared/service/comments.service';
 import { UsersService } from '../../../shared/service/users.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-video-viewer',
@@ -20,12 +21,17 @@ import { UsersService } from '../../../shared/service/users.service';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatIconModule,
     MatButtonModule
   ],
   templateUrl: './video-viewer.component.html',
   styleUrl: './video-viewer.component.scss'
 })
 export class VideoViewerComponent implements OnInit {
+  @Input() hideComments: boolean = false;
+  @Output() videoLiked = new EventEmitter<number>();
+  @Output() videoDisliked = new EventEmitter<number>();
+  
   videoId: number = 0;
   video?: Video;
   comments: Comment[] = [];
@@ -41,12 +47,16 @@ export class VideoViewerComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.videoId = parseInt(params['id']);
-      this.video = this.videosService.getVideoById(this.videoId);
-      if (this.video) {
-        this.loadComments();
-      }
+      this.videoId = +params['id'];
+      this.loadVideo();
     });
+  }
+
+  private loadVideo() {
+    this.video = this.videosService.getVideoById(this.videoId);
+    if (this.video) {
+      this.loadComments();
+    }
   }
 
   private loadComments() {
@@ -84,6 +94,20 @@ export class VideoViewerComponent implements OnInit {
         this.commentUsers.set(newComment.szerzoId, user);
       }
       this.newCommentText = '';
+    }
+  }
+
+  onLikeClick() {
+    if (this.video) {
+      this.video.kedvelesekSzama++;
+      this.videoLiked.emit(this.video._id);
+    }
+  }
+
+  onDislikeClick() {
+    if (this.video) {
+      this.video.nemKedvelesekSzama++;
+      this.videoDisliked.emit(this.video._id);
     }
   }
 }

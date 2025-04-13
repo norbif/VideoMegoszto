@@ -51,6 +51,31 @@
 .video-likes {
     display: flex;
     gap: 16px;
+
+    button {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: var(--text-primary);
+
+        mat-icon {
+            font-size: 20px;
+        }
+
+        &:hover {
+            mat-icon {
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    button:first-child:hover {
+        color: var(--accent-color);
+    }
+
+    button:last-child:hover {
+        color: #ff4444;
+    }
 }
 
 .video-description {
@@ -182,6 +207,16 @@ textarea.mat-input-element {
     .video-stats {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .video-likes {
+        gap: 8px;
+        
+        button {
+            mat-icon {
+                font-size: 18px;
+            }
+        }
     }
 
     .comment-text,

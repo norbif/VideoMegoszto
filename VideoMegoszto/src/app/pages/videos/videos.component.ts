@@ -7,6 +7,8 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { VideoViewerComponent } from './video-viewer/video-viewer.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-videos',
@@ -16,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     MatPaginatorModule, 
     MatButtonToggleModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    MatIconModule
   ],
   templateUrl: './videos.component.html',
   styleUrl: './videos.component.scss'
@@ -31,6 +34,7 @@ export class VideosComponent implements OnInit {
   totalItems = 0;
   currentSort: 'newest' | 'oldest' = 'newest';
   currentPageIndex = 0;
+  selectedVideoId?: number;
   
   sortOptions = [
     { value: 'views', label: 'Megtekintések szerint' },
@@ -104,5 +108,15 @@ export class VideosComponent implements OnInit {
 
   onVideoClick(video_id: number) {
     this.router.navigate(['/videos', video_id]);
+  }
+
+  onVideoLiked(videoId: number) {
+    console.log(`Video ${videoId} liked!`);
+    this.loadAndSortVideos();
+  }
+
+  onVideoDisliked(videoId: number) {
+    console.log(`Video ${videoId} disliked!`);
+    this.loadAndSortVideos();
   }
 }

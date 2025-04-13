@@ -1,20 +1,25 @@
-html, body { height: 100%; }
+@use '@angular/material' as mat;
+
+html, body { 
+  height: 100%; 
+  background-color: var(--background-dark);
+}
+
 body { 
   margin: 0; 
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #1a1a1a; 
+  color: var(--text-primary);
 }
 
 :root {
-  --primary-color: #007fff; 
-  --accent-color: #00bfff;  
-  --hover-color: #1e90ff;   
-  --background-dark: #1a1a1a; 
-  --background-light: #2d2d2d; 
-  --text-primary: #ffffff;   
-  --text-secondary: #ffffff; 
+  --primary-color: #007fff; // Azure blue
+  --accent-color: #00bfff;  // Deep sky blue
+  --hover-color: #1e90ff;   // Dodger blue
+  --background-dark: #1a1a1a; // Dark background
+  --background-light: #2d2d2d; // Lighter dark
+  --text-primary: #ffffff;   // White text
+  --text-secondary: #ffffff; // Light gray text
 }
-
 
 .mat-mdc-select-value-text,
 .mat-mdc-select-arrow,
@@ -28,31 +33,7 @@ body {
   color: var(--text-primary) !important;
 }
 
-
-.mat-mdc-form-field {
-  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label,
-  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
-    color: var(--text-primary);
-  }
-}
-
-
-.mat-mdc-select-panel {
-  background-color: var(--background-dark);
-  
-  .mat-mdc-option {
-    color: var(--text-primary);
-    
-    &:hover:not(.mat-mdc-option-disabled) {
-      background-color: var(--background-light);
-    }
-    
-    &.mat-mdc-option-active {
-      background-color: var(--primary-color);
-    }
-  }
-}
-
+// Material overrides
 .mat-mdc-raised-button.mat-primary {
   background-color: var(--primary-color) !important;
   color: var(--text-primary) !important;
@@ -65,6 +46,146 @@ body {
 mat-toolbar {
   background-color: var(--background-light) !important;
   color: var(--text-primary) !important;
+}
+
+.mat-drawer-container {
+  background-color: var(--background-dark) !important;
+  color: var(--text-primary) !important;
+}
+
+.mat-drawer {
+  background-color: var(--background-light) !important;
+  color: var(--text-primary) !important;
+}
+
+.mat-mdc-form-field {
+  .mat-mdc-text-field-wrapper {
+    background-color: var(--background-dark);
+  }
+  
+  .mat-mdc-form-field-flex {
+    background-color: var(--background-dark) !important;
+  }
+
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: var(--text-primary);
+  }
+
+  .mat-mdc-form-field-label {
+    color: var(--text-secondary);
+  }
+}
+
+.mat-mdc-select-panel {
+  background-color: var(--background-dark) !important;
+
+  .mat-mdc-option {
+    color: var(--text-primary) !important;
+    
+    &:hover {
+      background-color: var(--background-light) !important;
+    }
+
+    &.mat-mdc-option-active {
+      background-color: var(--primary-color) !important;
+    }
+  }
+}
+
+.mat-mdc-paginator {
+  background-color: var(--background-light) !important;
+
+  .mat-mdc-icon-button {
+    color: var(--text-primary);
+    
+    &.mat-mdc-paginator-navigation-previous,
+    &.mat-mdc-paginator-navigation-next,
+    &.mat-mdc-paginator-navigation-first,
+    &.mat-mdc-paginator-navigation-last {
+      background-color: transparent !important;
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+      }
+
+      .mat-ripple-element {
+        display: none;
+      }
+    }
+
+    &:disabled {
+      color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  .mdc-icon-button__ripple::before,
+  .mdc-icon-button__ripple::after {
+    background-color: transparent !important;
+  }
+
+  .mat-mdc-paginator-container {
+    color: var(--text-primary);
+  }
+
+  .mat-mdc-paginator-range-label,
+  .mat-mdc-paginator-page-size-label {
+    color: var(--text-primary);
+  }
+
+  ::ng-deep {
+    .mat-mdc-paginator-icon {
+      fill: var(--text-primary);
+    }
+
+    .mat-mdc-paginator-container {
+      color: var(--text-primary);
+      background-color: var(--background-light) !important;
+    }
+
+    // Fix for the items per page selector
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+
+    .mat-mdc-paginator-page-size-select {
+      background-color: var(--background-dark) !important;
+      margin: 0 4px !important;
+    }
+
+    // Fix for the blue highlight
+    .mat-mdc-select-value,
+    .mat-mdc-select-arrow,
+    .mat-mdc-paginator-page-size-label,
+    .mat-mdc-paginator-range-label {
+      color: var(--text-primary) !important;
+    }
+
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: transparent !important;
+        background-color: var(--background-dark) !important;
+      }
+    }
+
+    .mat-mdc-text-field-wrapper {
+      background-color: transparent !important;
+    }
+
+    .mdc-text-field--outlined {
+      --mdc-outlined-text-field-container-color: transparent;
+    }
+  }
+}
+
+.mat-button-toggle-group {
+  background-color: var(--background-dark) !important;
+
+  .mat-button-toggle-checked {
+    background-color: var(--primary-color) !important;
+    color: var(--text-primary) !important;
+  }
 }
 
 .page-container {

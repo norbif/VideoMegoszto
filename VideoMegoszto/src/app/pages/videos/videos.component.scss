@@ -104,15 +104,69 @@
   }
 }
 
+.video-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.video-reactions {
+  display: flex;
+  gap: 16px;
+  color: var(--text-secondary);
+  font-size: 14px;
+
+  .likes, .dislikes {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .likes {
+    color: var(--accent-color);
+  }
+
+  .dislikes {
+    color: var(--text-secondary);
+  }
+}
+
 mat-paginator {
   width: 100%;
   margin-top: 20px;
-  background-color: var(--background-light);
+  
   color: var(--text-primary);
 
   ::ng-deep {
     .mat-mdc-paginator-icon {
       fill: var(--text-primary);
+    }
+
+    .mat-mdc-icon-button {
+      &.mat-mdc-paginator-navigation-previous,
+      &.mat-mdc-paginator-navigation-next {
+        background-color: transparent !important;
+        
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+      }
+    }
+
+    .mdc-icon-button::before,
+    .mdc-icon-button::after {
+      background-color: transparent;
+    }
+
+    .mat-mdc-paginator-container {
+      color: var(--text-primary);
     }
   }
 }
@@ -162,6 +216,17 @@ mat-paginator {
     
     .video-description {
       font-size: 13px;
+    }
+  }
+
+  .video-reactions {
+    gap: 8px;
+    font-size: 12px;
+
+    mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
     }
   }
 }

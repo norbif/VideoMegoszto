@@ -26,7 +26,19 @@
         <div class="video-info">
           <h2 class="video-title">{{ item.cim }}</h2>
           <p class="video-description">{{ item.leiras }}</p>
-          <p class="video-views">{{ item.megtekintesekSzama }} megtekintés</p>
+          <div class="video-stats">
+            <p class="video-views">{{ item.megtekintesekSzama }} megtekintés</p>
+            <div class="video-reactions">
+              <span class="likes">
+                <mat-icon>thumb_up</mat-icon>
+                {{ item.kedvelesekSzama }}
+              </span>
+              <span class="dislikes">
+                <mat-icon>thumb_down</mat-icon>
+                {{ item.nemKedvelesekSzama }}
+              </span>
+            </div>
+          </div>
           <p class="upload-date">{{ item.feltoltesDatuma | date:'yyyy.MM.dd' }}</p>
         </div>
       </div>
