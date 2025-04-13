@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Video, VideoLathatosag } from '../../../shared/models/video';
-import videok from '../../../../../public/jsons/videok.json';
+import { Video } from '../../../shared/models/video';
+import { Comment } from '../../../shared/models/comment';
+import { User } from '../../../shared/models/user';
+import { VideosService } from '../../../shared/service/videos.service';
+import { CommentsService } from '../../../shared/service/comments.service';
+import { UsersService } from '../../../shared/service/users.service';
 
 @Component({
   selector: 'app-video-viewer',
@@ -14,55 +18,40 @@ import videok from '../../../../../public/jsons/videok.json';
 export class VideoViewerComponent implements OnInit {
   videoId: number = 0;
   video?: Video;
+  comments: Comment[] = [];
+  commentUsers: Map<number, User> = new Map();
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private videosService: VideosService,
+    private commentsService: CommentsService,
+    private usersService: UsersService
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.videoId = parseInt(params['id']);
-      const foundVideo = videok.find(v => v._id === this.videoId);
-      
-      if (foundVideo) {
-        this.video = {
-          _id: foundVideo._id,
-          cim: foundVideo.cim,
-          leiras: foundVideo.leiras,
-          url: foundVideo.url,
-          thumbnailUrl: foundVideo.thumbnailUrl,
-          feltoltoId: {
-            _id: foundVideo.feltoltoId._id,
-            felhasznalonev: foundVideo.feltoltoId.felhasznalonev,
-            email: foundVideo.feltoltoId.email,
-            jelszoHash: foundVideo.feltoltoId.jelszoHash,
-            profilkepUrl: foundVideo.feltoltoId.profilkepUrl,
-            regisztracioDatuma: new Date(foundVideo.feltoltoId.regisztracioDatuma),
-            feltoltottVideok: foundVideo.feltoltoId.feltoltottVideok,
-            kedveltVideok: foundVideo.feltoltoId.kedveltVideok,
-            lejatszasiListak: foundVideo.feltoltoId.lejatszasiListak
-          },
-          feltoltesDatuma: new Date(foundVideo.feltoltesDatuma),
-          hosszMasodpercben: foundVideo.hosszMasodpercben,
-          megtekintesekSzama: foundVideo.megtekintesekSzama,
-          cimkek: foundVideo.cimkek,
-          lathatosag: this.convertToVideoLathatosag(foundVideo.lathatosag),
-          kedvelesekSzama: foundVideo.kedvelesekSzama || 0,
-          nemKedvelesekSzama: foundVideo.nemKedvelesekSzama || 0,
-          hozzaszolasok: foundVideo.hozzaszolasok || []
-        };
+      this.video = this.videosService.getVideoById(this.videoId);
+      if (this.video) {
+        this.loadComments();
       }
     });
   }
 
-  private convertToVideoLathatosag(value: string): VideoLathatosag {
-    switch (value) {
-      case 'public':
-        return VideoLathatosag.Nyilvanos;
-      case 'unlisted':
-        return VideoLathatosag.NemListazott;
-      case 'private':
-        return VideoLathatosag.Privat;
-      default:
-        return VideoLathatosag.Nyilvanos;
+  private loadComments() {
+    if (this.video) {
+      this.comments = this.commentsService.getCommentsByIds(this.video.hozzaszolasok);
+      // Load users for each comment
+      this.comments.forEach(comment => {
+        const user = this.usersService.getUserById(comment.szerzoId);
+        if (user) {
+          this.commentUsers.set(comment.szerzoId, user);
+        }
+      });
     }
+  }
+
+  getUserForComment(szerzoId: number): User | undefined {
+    return this.commentUsers.get(szerzoId);
   }
 }

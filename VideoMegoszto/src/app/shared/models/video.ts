@@ -13,7 +13,7 @@ export interface Video {
     leiras?: string;
     url: string;
     thumbnailUrl?: string; 
-    feltoltoId: User;
+    feltoltoId: number;
     feltoltesDatuma: Date; 
     hosszMasodpercben: number; 
     megtekintesekSzama: number; 

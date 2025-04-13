@@ -1,22 +1,15 @@
 <div class="home-container">
-  <div class="home-header">
-    <h1>Kiemelt videok</h1>
-
-  </div>
+  <h1>Ajánlott videók</h1>
   <div class="home-content">
     @for (item of videos; track $index) {
-        <div class="video-card" (click)="onVideoClick(item._id)">
-            <img [src]="item.thumbnailUrl" alt="Thumbnail" class="video-thumbnail" />
-            <div class="video-info">
-            <h2 class="video-title">{{ item.cim }}</h2>
-            <p class="video-description">{{ item.leiras }}</p>
-            <p class="video-views">{{ item.megtekintesekSzama }} megtekintés</p>
-            </div>
+      <div class="video-card" (click)="onVideoClick(item._id)">
+        <img [src]="item.thumbnailUrl" alt="Thumbnail" class="video-thumbnail" />
+        <div class="video-info">
+          <h2 class="video-title">{{ item.cim }}</h2>
+          <p class="video-description">{{ item.leiras }}</p>
+          <p class="video-views">{{ item.megtekintesekSzama }} megtekintés</p>
         </div>
+      </div>
     }
   </div>
-  <footer class="home-footer">
-    <p>&copy; 2023 VideoMegoszto.</p>
-  </footer>
-
 </div>

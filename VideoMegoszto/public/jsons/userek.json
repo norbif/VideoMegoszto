@@ -6,7 +6,18 @@
         "jelszoHash": "hashpeldaszoveg123",
         "profilkepUrl": "profile1.jpg",
         "regisztracioDatuma": "2024-01-15",
-        "feltoltottVideok": [],
+        "feltoltottVideok": [2,3],
+        "kedveltVideok": [],
+        "lejatszasiListak": []
+    },
+    {
+        "_id": 2,
+        "felhasznalonev": "typescript_guru",
+        "email": "typescript@example.com",
+        "jelszoHash": "hashpeldaszoveg456",
+        "profilkepUrl": "profile2.jpg",
+        "regisztracioDatuma": "2024-02-01",
+        "feltoltottVideok": [1],
         "kedveltVideok": [],
         "lejatszasiListak": []
     }

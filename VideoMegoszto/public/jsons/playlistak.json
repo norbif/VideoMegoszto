@@ -1,0 +1,22 @@
+[
+    {
+        "_id": 1,
+        "nev": "Angular & TypeScript Oktatóanyagok",
+        "leiras": "Válogatott videók az Angular és TypeScript tanulásához",
+        "keszitoId": 1,
+        "videoIdk": [1, 2],
+        "letrehozasDatuma": "2024-04-01T10:00:00",
+        "utolsoModositasDatuma": "2024-04-10T15:30:00",
+        "lathatosag": "public"
+    },
+    {
+        "_id": 2,
+        "nev": "JavaScript Fejlesztői Csomag",
+        "leiras": "Modern JavaScript és TypeScript fejlesztési alapok",
+        "keszitoId": 2,
+        "videoIdk": [2, 3],
+        "letrehozasDatuma": "2024-04-05T14:20:00",
+        "utolsoModositasDatuma": "2024-04-05T14:20:00",
+        "lathatosag": "public"
+    }
+]

@@ -15,4 +15,25 @@
         </div>
         <p class="video-description">{{video.leiras}}</p>
     </div>
+    <div class="comments-section">
+        <h2>Hozzászólások ({{comments.length}})</h2>
+        <div class="comments-list">
+            <div class="comment" *ngFor="let comment of comments">
+                <div class="comment-header">
+                    <img [src]="getUserForComment(comment.szerzoId)?.profilkepUrl" 
+                         alt="Profile picture" 
+                         class="profile-pic">
+                    <div class="comment-meta">
+                        <span class="username">{{getUserForComment(comment.szerzoId)?.felhasznalonev}}</span>
+                        <span class="date">{{comment.datum | date:'yyyy.MM.dd HH:mm'}}</span>
+                    </div>
+                </div>
+                <p class="comment-text">{{comment.szoveg}}</p>
+                <div class="comment-stats">
+                    <span>{{comment.kedvelesekSzama}} tetszés</span>
+                    <span>{{comment.nemKedvelesekSzama}} nem tetszés</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

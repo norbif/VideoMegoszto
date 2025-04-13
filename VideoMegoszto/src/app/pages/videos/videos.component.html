@@ -1,1 +1,22 @@
-<p>videos works!</p>
+<div class="home-container">
+  <div class="home-content">
+    @for (item of pagedVideos; track $index) {
+      <div class="video-card" (click)="onVideoClick(item._id)">
+        <img [src]="item.thumbnailUrl" alt="Thumbnail" class="video-thumbnail" />
+        <div class="video-info">
+          <h2 class="video-title">{{ item.cim }}</h2>
+          <p class="video-description">{{ item.leiras }}</p>
+          <p class="video-views">{{ item.megtekintesekSzama }} megtekintés</p>
+        </div>
+      </div>
+    }
+  </div>
+  
+  <mat-paginator
+    [length]="totalItems"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="updatePage($event)"
+    aria-label="Videók lapozása">
+  </mat-paginator>
+</div>
