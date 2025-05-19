@@ -2,7 +2,7 @@
   <h1 class="page-title">Ajánlott videók</h1>
   <div class="video-grid">
     @for (item of videos; track $index) {
-      <div class="video-card" (click)="onVideoClick(item._id)">
+      <div class="video-card" (click)="onVideoClick(item.id!)">
         <div class="thumbnail-container">
           <img [src]="item.thumbnailUrl" alt="Thumbnail" class="video-thumbnail">
           <span class="duration">{{formatDuration(item.hosszMasodpercben)}}</span>

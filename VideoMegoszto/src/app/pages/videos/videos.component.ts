@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { VideoViewerComponent } from './video-viewer/video-viewer.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-videos',
@@ -19,28 +20,30 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonToggleModule,
     MatSelectModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    MatFormFieldModule
   ],
   templateUrl: './videos.component.html',
-  styleUrl: './videos.component.scss'
+  styleUrls: ['./videos.component.scss']
 })
 export class VideosComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   
   allVideos: Video[] = [];
   pagedVideos: Video[] = [];
-  pageSize = 3;
-  pageSizeOptions = [3, 6];
+  pageSize = 12;
+  pageSizeOptions = [6, 12, 24, 48];
   totalItems = 0;
   currentSort: 'newest' | 'oldest' = 'newest';
   currentPageIndex = 0;
   selectedVideoId?: number;
+  videos: any[] = [];
   
   sortOptions = [
     { value: 'views', label: 'Megtekintések szerint' },
     { value: 'date', label: 'Dátum szerint' }
   ];
-  selectedSortType = 'date';
+  selectedSortType: 'date' | 'views' = 'date';
   
   constructor(
     private videosService: VideosService,
@@ -51,63 +54,53 @@ export class VideosComponent implements OnInit {
     this.loadAndSortVideos();
   }
 
-  private loadAndSortVideos() {
-    this.allVideos = this.videosService.getAllVideos();
-    this.sortVideos();
-    this.totalItems = this.allVideos.length;
-    this.updatePage({ 
-      pageIndex: this.currentPageIndex, 
-      pageSize: this.pageSize, 
-      length: this.totalItems 
-    });
-  }
-
-  sortVideos() {
-    if (this.selectedSortType === 'date') {
-      this.allVideos.sort((a, b) => {
-        const dateA = new Date(a.feltoltesDatuma).getTime();
-        const dateB = new Date(b.feltoltesDatuma).getTime();
-        return this.currentSort === 'newest' ? dateB - dateA : dateA - dateB;
-      });
-    } else {
-      this.allVideos.sort((a, b) => {
-        return this.currentSort === 'newest' 
-          ? b.megtekintesekSzama - a.megtekintesekSzama 
-          : a.megtekintesekSzama - b.megtekintesekSzama;
-      });
+  private async loadAndSortVideos() {
+    try {
+      const allVideos = await this.videosService.getAllVideos();
+      this.totalItems = allVideos.length;
+      
+      // Sort videos
+      const sortedVideos = this.sortVideos(allVideos);
+      
+      // Paginate
+      const start = this.currentPageIndex * this.pageSize;
+      const end = start + this.pageSize;
+      this.pagedVideos = sortedVideos.slice(start, end);
+    } catch (error) {
+      console.error('Error loading videos:', error);
     }
   }
 
-  onSortTypeChange(value: string) {
-    this.selectedSortType = value;
-    this.sortVideos();
-    this.updatePage({ 
-      pageIndex: this.paginator.pageIndex, 
-      pageSize: this.paginator.pageSize, 
-      length: this.totalItems 
+  sortVideos(videos: Video[]): Video[] {
+    return videos.sort((a, b) => {
+      if (this.selectedSortType === 'date') {
+        const dateComparison = new Date(b.feltoltesDatuma).getTime() - new Date(a.feltoltesDatuma).getTime();
+        return this.currentSort === 'newest' ? dateComparison : -dateComparison;
+      } else {
+        const viewsComparison = b.megtekintesekSzama - a.megtekintesekSzama;
+        return this.currentSort === 'newest' ? viewsComparison : -viewsComparison;
+      }
     });
+  }
+
+  onSortTypeChange(value: 'date' | 'views') {
+    this.selectedSortType = value;
+    this.loadAndSortVideos();
   }
 
   onSortChange(value: 'newest' | 'oldest') {
     this.currentSort = value;
-    this.sortVideos();
-    this.updatePage({ 
-      pageIndex: this.paginator.pageIndex, 
-      pageSize: this.paginator.pageSize, 
-      length: this.totalItems 
-    });
+    this.loadAndSortVideos();
   }
 
   updatePage(event: PageEvent) {
-    const startIndex = event.pageIndex * event.pageSize;
-    const endIndex = startIndex + event.pageSize;
-    this.pagedVideos = this.allVideos.slice(startIndex, endIndex);
-    this.pageSize = event.pageSize;
     this.currentPageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.loadAndSortVideos();
   }
 
-  onVideoClick(video_id: number) {
-    this.router.navigate(['/videos', video_id]);
+  onVideoClick(videoId: number) {
+    this.router.navigate(['/videos', videoId]);
   }
 
   onVideoLiked(videoId: number) {
@@ -118,5 +111,11 @@ export class VideosComponent implements OnInit {
   onVideoDisliked(videoId: number) {
     console.log(`Video ${videoId} disliked!`);
     this.loadAndSortVideos();
+  }
+
+  formatDuration(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 }

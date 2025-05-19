@@ -49,11 +49,11 @@
         <div class="comments-list">
             <div class="comment" *ngFor="let comment of comments">
                 <div class="comment-header">
-                    <img [src]="getUserForComment(comment.szerzoId)?.profilkepUrl" 
+                    <img [src]="getUserForComment(+comment.szerzoId)?.profilkepUrl" 
                          alt="Profile picture" 
                          class="profile-pic">
                     <div class="comment-meta">
-                        <span class="username">{{getUserForComment(comment.szerzoId)?.felhasznalonev}}</span>
+                        <span class="username">{{getUserForComment(+comment.szerzoId)?.felhasznalonev}}</span>
                         <span class="date">{{comment.datum | date:'yyyy.MM.dd HH:mm'}}</span>
                     </div>
                 </div>

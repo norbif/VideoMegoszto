@@ -1,11 +1,10 @@
 export interface User {
-    _id: number; 
-    felhasznalonev: string; 
-    email: string; 
-    jelszoHash: string;
-    profilkepUrl?: string; 
-    regisztracioDatuma: Date; 
-    feltoltottVideok: number[]; 
-    kedveltVideok?: number[]; 
-    lejatszasiListak?: number[];
+    id?: string;  // Firestore document ID
+    felhasznalonev: string;
+    email: string;
+    profilkepUrl?: string;
+    regisztracioDatuma: Date;
+    feltoltottVideok: string[];  // Video document IDs
+    kedveltVideok: string[];    // Video document IDs
+    lejatszasiListak: string[]; // Playlist document IDs
 }

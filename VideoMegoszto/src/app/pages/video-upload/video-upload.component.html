@@ -1,0 +1,42 @@
+<div class="upload-container">
+  <div class="upload-card">
+    <h1>Videó feltöltése</h1>
+
+    <div class="upload-form">
+      <div class="file-input">
+        <button mat-raised-button (click)="fileInput.click()">
+          <mat-icon>upload</mat-icon>
+          Videó kiválasztása
+        </button>
+        <input #fileInput type="file" (change)="onFileSelected($event)" accept="video/*" style="display: none">
+        <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Videó címe</mat-label>
+        <input matInput [(ngModel)]="videoTitle" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Leírás</mat-label>
+        <textarea matInput [(ngModel)]="videoDescription" rows="4"></textarea>
+      </mat-form-field>
+
+      @if (errorMessage) {
+        <div class="error-message">{{ errorMessage }}</div>
+      }
+
+      @if (isUploading) {
+        <mat-progress-bar mode="determinate" [value]="uploadProgress"></mat-progress-bar>
+      }
+
+      <div class="upload-actions">
+        <button mat-raised-button color="primary" 
+                (click)="onUpload()" 
+                [disabled]="!selectedFile || !videoTitle || isUploading">
+          Feltöltés
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

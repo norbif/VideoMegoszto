@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Firestore, doc, updateDoc, getDoc } from '@angular/fire/firestore';
+import { NextcloudService } from './nextcloud.service';
 import { User } from '../models/user';
 import userek from '../../../../public/jsons/userek.json';
 
@@ -6,9 +8,13 @@ import userek from '../../../../public/jsons/userek.json';
   providedIn: 'root'
 })
 export class UsersService {
+  private readonly collectionName = 'users';
   private users: User[] = [];
 
-  constructor() {
+  constructor(
+    private firestore: Firestore,
+    private nextcloudService: NextcloudService
+  ) {
     this.loadUsers();
   }
 
@@ -20,7 +26,7 @@ export class UsersService {
       jelszoHash: user.jelszoHash,
       profilkepUrl: user.profilkepUrl,
       regisztracioDatuma: new Date(user.regisztracioDatuma),
-      feltoltottVideok: user.feltoltottVideok || [],
+      feltoltottVideok: (user.feltoltottVideok || []).map(String),
       kedveltVideok: user.kedveltVideok || [],
       lejatszasiListak: user.lejatszasiListak || []
     }));
@@ -30,11 +36,31 @@ export class UsersService {
     return this.users;
   }
 
-  getUserById(id: number): User | undefined {
-    return this.users.find(user => user._id === id);
+  getUserById(id: string): User | undefined {
+    return this.users.find(user => user.id === id);
   }
 
-  getUsersByIds(ids: number[]): User[] {
-    return this.users.filter(user => ids.includes(user._id));
+  async updateProfile(userId: string, data: Partial<User>, profilePicture?: File): Promise<void> {
+    try {
+      console.log('%c Updating profile', 'background: #2196F3; color: white', { userId, data });
+      
+      const updateData: Partial<User> = { ...data };
+
+      if (profilePicture) {
+        // Upload profile picture to Nextcloud
+        const folderPath = `profile-pictures/${userId}`;
+        const pictureUrl = await this.nextcloudService.uploadVideo(profilePicture, folderPath);
+        updateData.profilkepUrl = pictureUrl;
+      }
+
+      // Update user data in Firestore
+      const userRef = doc(this.firestore, this.collectionName, userId);
+      await updateDoc(userRef, updateData);
+
+      console.log('%c Profile updated successfully', 'background: #4CAF50; color: white');
+    } catch (error) {
+      console.error('%c Profile update failed', 'background: #f44336; color: white', error);
+      throw error;
+    }
   }
 }

@@ -4,6 +4,8 @@
     justify-content: center;
     position: relative;
     background-color: var(--background-light);
+    align-items: center;
+    padding: 0 16px;
 }
 
 .app-toolbar {
@@ -11,6 +13,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 16px;
     
     color: var(--text-primary);
     height: 64px;
@@ -30,6 +33,16 @@
 .app-title {
     font-size: 24px;
     font-weight: bold;
+    a {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: 500;
+
+        &:hover {
+            color: var(--accent-color);
+        }
+    }
 }
 
 a {
@@ -42,9 +55,19 @@ a:hover {
 }
 
 .app-sidenav {
-    width: 150px;
+    width: 250px;
     background-color: var(--background-light);
     color: var(--text-primary);
+    transform-origin: left;
+    transition: transform 0.3s ease-in-out;
+
+    &.mat-drawer-opened {
+        transform: translateX(0);
+    }
+
+    &:not(.mat-drawer-opened) {
+        transform: translateX(-100%);
+    }
 
     ::ng-deep {
         .mat-mdc-list-item {
@@ -56,4 +79,13 @@ a:hover {
 .menu-button {
     background-color: var(--primary-color);
     color: var(--text-primary);
+    transition: transform 0.3s ease;
+
+    &:hover {
+        background-color: var(--accent-color);
+    }
+}
+
+mat-sidenav-container {
+    height: 100vh;
 }

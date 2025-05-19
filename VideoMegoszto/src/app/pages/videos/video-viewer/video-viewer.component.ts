@@ -12,6 +12,7 @@ import { VideosService } from '../../../shared/service/videos.service';
 import { CommentsService } from '../../../shared/service/comments.service';
 import { UsersService } from '../../../shared/service/users.service';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../../shared/service/auth.service';
 
 @Component({
   selector: 'app-video-viewer',
@@ -32,82 +33,74 @@ export class VideoViewerComponent implements OnInit {
   @Output() videoLiked = new EventEmitter<number>();
   @Output() videoDisliked = new EventEmitter<number>();
   
-  videoId: number = 0;
   video?: Video;
   comments: Comment[] = [];
-  commentUsers: Map<number, User> = new Map();
-  newCommentText: string = '';
-
+  newCommentText = '';
+  commentUsers = new Map<string, User>();
   constructor(
     private route: ActivatedRoute,
     private videosService: VideosService,
     private commentsService: CommentsService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private authService: AuthService
   ) {}
+  
 
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.videoId = +params['id'];
-      this.loadVideo();
-    });
-  }
-
-  private loadVideo() {
-    this.video = this.videosService.getVideoById(this.videoId);
-    if (this.video) {
-      this.loadComments();
+  async ngOnInit() {
+    const videoId = this.route.snapshot.paramMap.get('id');
+    if (videoId) {
+      this.video = await this.videosService.getVideoById(videoId);
+      if (this.video) {
+        await this.loadComments();
+      }
     }
   }
 
-  private loadComments() {
+  private async loadComments() {
     if (this.video) {
-      this.comments = this.commentsService.getCommentsByIds(this.video.hozzaszolasok);
-      this.comments.forEach(comment => {
-        const user = this.usersService.getUserById(comment.szerzoId);
+      this.comments = await this.commentsService.getCommentsByVideoId(this.video.id!);
+      for (const comment of this.comments) {
+        const user = await this.usersService.getUserById(comment.szerzoId.toString());
         if (user) {
           this.commentUsers.set(comment.szerzoId, user);
         }
-      });
+      }
     }
   }
 
   getUserForComment(szerzoId: number): User | undefined {
-    return this.commentUsers.get(szerzoId);
+    return this.commentUsers.get(szerzoId.toString());
   }
 
-  addComment() {
-    if (this.video && this.newCommentText.trim()) {
-      const newComment: Comment = {
-        _id: this.comments.length + 1,
-        szerzoId: 1, 
-        szoveg: this.newCommentText.trim(),
-        datum: new Date(),
-        kedvelesekSzama: 0,
-        nemKedvelesekSzama: 0
-      };
+  async addComment() {
+    const currentUser = await this.authService.getCurrentUser().toPromise();
+    if (!currentUser || !this.video || !this.newCommentText.trim()) return;
 
-      this.comments.unshift(newComment);
-      
-      
-      const user = this.usersService.getUserById(newComment.szerzoId);
-      if (user) {
-        this.commentUsers.set(newComment.szerzoId, user);
-      }
-      this.newCommentText = '';
-    }
+    const newComment: Comment = {
+      videoId: this.video.id!,
+      szerzoId: currentUser.id!,
+      szoveg: this.newCommentText.trim(),
+      datum: new Date(),
+      kedvelesekSzama: 0,
+      nemKedvelesekSzama: 0
+    };
+
+    await this.commentsService.addComment(newComment);
+    await this.loadComments();
+    this.newCommentText = '';
   }
 
   onLikeClick() {
     if (this.video) {
       this.video.kedvelesekSzama++;
-      this.videoLiked.emit(this.video._id);
+      this.videoLiked.emit(Number(this.video.id));
     }
   }
 
   onDislikeClick() {
     if (this.video) {
       this.video.nemKedvelesekSzama++;
-      this.videoDisliked.emit(this.video._id);
+      this.videoDisliked.emit(Number(this.video.id));
     }
   }
 }

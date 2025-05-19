@@ -1,7 +1,30 @@
 <mat-nav-list>  
+    <a mat-list-item routerLink="/home" (click)="menuItems.close()">
+        <mat-icon>home</mat-icon>
+        <span>Főoldal</span>
+    </a>
+    <a mat-list-item routerLink="/videos" (click)="menuItems.close()">
+        <mat-icon>video_library</mat-icon>
+        <span>Videók</span>
+    </a>
     
-  <a mat-list-item routerLink="/home">Főoldal</a>
-    <a mat-list-item routerLink="/videos">Videók</a>
-    <a mat-list-item routerLink="/profile">Profil</a>
-    
+    @if (authService.getCurrentUser() | async; as user) {
+        <a mat-list-item routerLink="/upload" (click)="menuItems.close()">
+            <mat-icon>upload</mat-icon>
+            <span>Videó feltöltése</span>
+        </a>
+        <a mat-list-item routerLink="/profile" (click)="menuItems.close()">
+            <mat-icon>person</mat-icon>
+            <span>Profil</span>
+        </a>
+        <a mat-list-item (click)="authService.logout(); menuItems.close()">
+            <mat-icon>logout</mat-icon>
+            <span>Kijelentkezés</span>
+        </a>
+    } @else {
+        <a mat-list-item routerLink="/login" (click)="menuItems.close()">
+            <mat-icon>login</mat-icon>
+            <span>Bejelentkezés</span>
+        </a>
+    }
 </mat-nav-list>

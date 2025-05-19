@@ -1,37 +1,80 @@
 import { Injectable } from '@angular/core';
+import { Firestore, collection, addDoc, getDocs, doc, getDoc, query, where, orderBy, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Comment } from '../models/comment';
-import commentek from '../../../../public/jsons/commentek.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentsService {
-  private comments: Comment[] = [];
+  private readonly collectionName = 'comments';
 
-  constructor() {
-    this.loadComments();
+  constructor(private firestore: Firestore) {}
+
+  async addComment(comment: Omit<Comment, 'id'>): Promise<string> {
+    const commentsRef = collection(this.firestore, this.collectionName);
+    const docRef = await addDoc(commentsRef, {
+      ...comment,
+      datum: new Date()
+    });
+    return docRef.id;
   }
 
-  private loadComments() {
-    this.comments = commentek.map(comment => ({
-      _id: comment._id,
-      szerzoId: comment.szerzoId,
-      szoveg: comment.szoveg,
-      datum: new Date(comment.datum),
-      kedvelesekSzama: comment.kedvelesekSzama,
-      nemKedvelesekSzama: comment.nemKedvelesekSzama
-    }));
+  async getCommentsByVideoId(videoId: string): Promise<Comment[]> {
+    const commentsRef = collection(this.firestore, this.collectionName);
+    const q = query(
+      commentsRef, 
+      where('videoId', '==', videoId),
+      orderBy('datum', 'desc')
+    );
+    
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({
+      ...doc.data(),
+      id: doc.id,
+      datum: doc.data()['datum'].toDate()
+    } as Comment));
   }
 
-  getAllComments(): Comment[] {
-    return this.comments;
+  async getCommentById(id: string): Promise<Comment | undefined> {
+    const commentRef = doc(this.firestore, this.collectionName, id);
+    const commentDoc = await getDoc(commentRef);
+    
+    if (commentDoc.exists()) {
+      const data = commentDoc.data();
+      return {
+        ...data,
+        id: commentDoc.id,
+        datum: data['datum'].toDate()
+      } as Comment;
+    }
+    return undefined;
   }
 
-  getCommentById(id: number): Comment | undefined {
-    return this.comments.find(comment => comment._id === id);
+  async updateComment(id: string, changes: Partial<Comment>): Promise<void> {
+    const commentRef = doc(this.firestore, this.collectionName, id);
+    await updateDoc(commentRef, changes);
   }
 
-  getCommentsByIds(ids: number[]): Comment[] {
-    return this.comments.filter(comment => ids.includes(comment._id));
+  async deleteComment(id: string): Promise<void> {
+    const commentRef = doc(this.firestore, this.collectionName, id);
+    await deleteDoc(commentRef);
+  }
+
+  async likeComment(id: string): Promise<void> {
+    const comment = await this.getCommentById(id);
+    if (comment) {
+      await this.updateComment(id, {
+        kedvelesekSzama: (comment.kedvelesekSzama || 0) + 1
+      });
+    }
+  }
+
+  async dislikeComment(id: string): Promise<void> {
+    const comment = await this.getCommentById(id);
+    if (comment) {
+      await this.updateComment(id, {
+        nemKedvelesekSzama: (comment.nemKedvelesekSzama || 0) + 1
+      });
+    }
   }
 }

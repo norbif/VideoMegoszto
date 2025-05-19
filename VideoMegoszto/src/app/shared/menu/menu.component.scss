@@ -1,12 +1,37 @@
 :host {
   mat-nav-list {
+    padding-top: 8px;
+
     a {
-      color: white;
-      text-decoration: none;
+      color: var(--text-primary) !important;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 16px;
+
+      mat-icon {
+        color: var(--text-primary);
+      }
+
+      span {
+        margin-left: 8px;
+      }
 
       &:hover {
-        color: var(--accent-color);
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      ::ng-deep {
+        .mdc-list-item__primary-text {
+          color: var(--text-primary) !important;
+        }
       }
     }
+  }
+}
+
+::ng-deep {
+  .mat-mdc-list-item-unscoped-content {
+    color: var(--text-primary) !important;
   }
 }

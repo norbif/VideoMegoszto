@@ -11,8 +11,8 @@
     <div class="content-section">
         <h2>Feltöltött videók ({{ userVideos.length }})</h2>
         <div class="videos-grid">
-            @for (video of userVideos; track $index) {
-                <div class="video-card" (click)="onVideoClick(video._id)">
+            @for (video of userVideos; track video.id) {
+                <div class="video-card" (click)="onVideoClick(video.id!)">
                     <img [src]="video.thumbnailUrl" alt="Thumbnail" class="video-thumbnail">
                     <div class="video-info">
                         <h3>{{ video.cim }}</h3>
@@ -27,7 +27,7 @@
         <h2>Lejátszási listák ({{ userPlaylists.length }})</h2>
         <div class="playlists-grid">
             @for (playlist of userPlaylists; track $index) {
-                <div class="playlist-card" (click)="onPlaylistClick(playlist._id)">
+                <div class="playlist-card" (click)="onPlaylistClick(playlist.id!)">
                     <h3>{{ playlist.nev }}</h3>
                     <p>{{ playlist.leiras }}</p>
                     <p class="video-count">{{ playlist.videoIdk.length }} videó</p>

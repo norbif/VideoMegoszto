@@ -20,29 +20,21 @@
   </div>
 
   <div class="home-content">
-    @for (item of pagedVideos; track $index) {
-      <div class="video-card" (click)="onVideoClick(item._id)">
-        <img [src]="item.thumbnailUrl" alt="Thumbnail" class="video-thumbnail" />
-        <div class="video-info">
-          <h2 class="video-title">{{ item.cim }}</h2>
-          <p class="video-description">{{ item.leiras }}</p>
-          <div class="video-stats">
-            <p class="video-views">{{ item.megtekintesekSzama }} megtekintés</p>
-            <div class="video-reactions">
-              <span class="likes">
-                <mat-icon>thumb_up</mat-icon>
-                {{ item.kedvelesekSzama }}
-              </span>
-              <span class="dislikes">
-                <mat-icon>thumb_down</mat-icon>
-                {{ item.nemKedvelesekSzama }}
-              </span>
-            </div>
+    <div class="video-grid">
+      @for (item of videos; track item.id) {
+        <div class="video-card" (click)="onVideoClick(item.id!)">
+          <div class="thumbnail-container">
+            <img [src]="item.thumbnailUrl" alt="Thumbnail" class="video-thumbnail">
+            <span class="duration">{{formatDuration(item.hosszMasodpercben)}}</span>
           </div>
-          <p class="upload-date">{{ item.feltoltesDatuma | date:'yyyy.MM.dd' }}</p>
+          <div class="video-info">
+            <h2>{{ item.cim }}</h2>
+            <p>{{ item.megtekintesekSzama }} megtekintés</p>
+            <p>{{ item.feltoltesDatuma | date:'yyyy.MM.dd' }}</p>
+          </div>
         </div>
-      </div>
-    }
+      }
+    </div>
   </div>
   
   <mat-paginator

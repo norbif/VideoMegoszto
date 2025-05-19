@@ -1,0 +1,35 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h1>Bejelentkezés</h1>
+    
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Email cím</mat-label>
+        <input matInput type="email" [(ngModel)]="email" name="email" required email>
+        <mat-icon matPrefix>email</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Jelszó</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="password" name="password" required>
+        <mat-icon matPrefix>lock</mat-icon>
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <div class="auth-actions">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.form.valid">
+          Bejelentkezés
+        </button>
+        <button mat-button type="button" routerLink="/register">
+          Regisztráció
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

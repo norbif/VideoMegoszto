@@ -19,8 +19,8 @@ export class HomeComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
-    const allVideos = this.videosService.getAllVideos();
+  async ngOnInit() {
+    const allVideos = await this.videosService.getAllVideos();
     this.videos = this.getRandomVideos(allVideos, 3);
   }
 
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 
-  onVideoClick(video_id: number) {
-    this.router.navigate(['/videos', video_id]);
+  onVideoClick(videoId: string) {
+    this.router.navigate(['/videos', videoId]);
   }
 }

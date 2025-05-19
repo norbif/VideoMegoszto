@@ -1,15 +1,15 @@
 export enum ListaLathatosag {
     Nyilvanos = 'public',
-    Privat = 'private',
-  }
+    Privat = 'private'
+}
 
 export interface Playlist {
-    _id: number;
-    nev: string; 
-    leiras?: string; 
-    keszitoId: number;
-    videoIdk: number[]; 
+    id?: string;  // Firestore document ID
+    nev: string;
+    leiras?: string;
+    keszitoId: string;  // Reference to user
+    videoIdk: string[]; // Video document IDs
     letrehozasDatuma: Date;
-    utolsoModositasDatuma: Date; 
-    lathatosag: ListaLathatosag; 
+    utolsoModositasDatuma: Date;
+    lathatosag: ListaLathatosag;
 }
